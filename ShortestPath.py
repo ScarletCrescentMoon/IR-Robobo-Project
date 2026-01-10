@@ -1,6 +1,6 @@
 import Global
 
-class ShortestPath
+class ShortestPath:
     '''
     ShortestPath
     Description:
@@ -19,6 +19,4 @@ class ShortestPath
         GetOrientations - Returns orientations as an Orientation Enum
     '''
     def __init__(self):
-        '''
-        Initialization function
-        
+        pass
