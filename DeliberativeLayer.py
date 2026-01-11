@@ -1,7 +1,7 @@
 from robobopy.Robobo import Robobo
 import Map
 
-class DeliberativeeLayer:
+class DeliberativeLayer:
     '''
     DeliberativeLayer
     Description:
@@ -13,11 +13,12 @@ class DeliberativeeLayer:
         shortestPath - The shortest path as an object
         roboCoord_One - The coordinates of the first robot
         roboCoord_Two - The coordinates of the second robot
-        mediativeLayer - The Mediative Layer object
+        mediativeLayer - The Mediative Layer object of which to reference
 
     Functions:
         GetCoords - Get coordinates from the Mediative Layer object
         CalcPath - Caclulates the shortest path between two robots
+        RunLayer - Function that opreates as a thread
     '''
     def __init__(self, mapFile):
         '''

@@ -3,9 +3,9 @@ import Global
 import time
 
 class ReactiveLayer:
-    def __init__(self, ip):
+    def __init__(self, roboID, ip):
         # Initialization of the robot and speed
-
+        self.ID = roboID
         self.robot = Robobo(ip)
         self.robot.connect()
         time.sleep(1)
@@ -13,6 +13,7 @@ class ReactiveLayer:
         self.robot.movePanTo(0,5)
         self.base_speed = 12
         self.turn_speed = 15
+        # TODO: Add current orientation, goal orientation
 
     def move_forward(self):
         # moves the robot forward
@@ -99,7 +100,7 @@ class ReactiveLayer:
 
         if front_val > 400000:
             print(f"Obstacle detected ({front_val})")
-            return True
+            return True # TODO: Return front_val, not a true statement, distance will be used to calc obstacle location
         
         return False
 
@@ -108,3 +109,15 @@ class ReactiveLayer:
         self.robot.moveWheels(-40, -40)
         time.sleep(1.5)
         self.stop_robot()
+
+    # TODO: 'Set goal orientation' function for mediative layer to give orientation to this robot instance
+    # TODO: 'Get current orientation' function for mediative layer to use to mark obstacles with
+    # TODO: 'Get Robo ID' for mediative layer to know which robot is detecting what
+    
+    def RunLayer(self):
+        # TODO: Run the functions above within this funtion, since this function will be the thread that runs
+        # while (!self.detect_target_robot):
+        #   if (current orientation != goal orientation):
+        #      rotate_to_direction(current, goal)
+        #   else
+        #      self.move_forward()
