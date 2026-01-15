@@ -33,3 +33,65 @@ class DeliberativeLayer:
         coords = self.map.GetStarts()
         self.roboCoord_One = coords[0]
         self.roboCoord_Two = coords[1]
+
+    def GetCoords(self):
+        vecs = self.mediativeLayer.GetRoboIn()
+        obstacles = self.mediativeLayer.GetObstaclesIn()
+
+        if vecs[0][1] == Orientation.N:
+            self.roboCoord_One[1] += vecs[0][0]
+        elif vecs[0][1] == Orientation.NE:
+            self.roboCoord_One[0] += vecs[0][0]
+            self.roboCoord_One[1] += vecs[0][0]
+        elif vecs[0][1] == Orientation.E:
+            self.roboCoord_One[0] += vecs[0][0]
+        elif vecs[0][1] == Orientation.SE:
+            self.roboCoord_One[0] += vecs[0][0]
+            self.roboCoord_One[1] -= vecs[0][0]
+        elif vecs[0][1] == Orientation.S:
+            self.roboCoord_One[1] -= vecs[0][0]
+        elif vecs[0][1] == Orientation.SW:
+            self.roboCoord_One[0] -= vecs[0][0]
+            self.roboCoord_One[1] -= vecs[0][0]
+        elif vecs[0][1] == Orientation.W:
+            self.roboCoord_One[0] -= vecs[0][0]
+        else:
+            self.roboCoord_One[0] -= vecs[0][0]
+            self.roboCoord_One[1] += vecs[0][0]
+
+        if vecs[1][1] == Orientation.N:
+            self.roboCoord_Two[1] += vecs[1][0]
+        elif vecs[1][1] == Orientation.NE:
+            self.roboCoord_Two[0] += vecs[1][0]
+            self.roboCoord_Two[1] += vecs[1][0]
+        elif vecs[1][1] == Orientation.E:
+            self.roboCoord_Two[0] += vecs[1][0]
+        elif vecs[1][1] == Orientation.SE:
+            self.roboCoord_Two[0] += vecs[1][0]
+            self.roboCoord_Two[1] -= vecs[1][0]
+        elif vecs[1][1] == Orientation.S:
+            self.roboCoord_Two[1] -= vecs[1][0]
+        elif vecs[1][1] == Orientation.SW:
+            self.roboCoord_Two[0] -= vecs[1][0]
+            self.roboCoord_Two[1] -= vecs[1][0]
+        elif vecs[1][1] == Orientation.W:
+            self.roboCoord_Two[0] -= vecs[1][0]
+        else:
+            self.roboCoord_Two[0] -= vecs[1][0]
+            self.roboCoord_Two[1] += vecs[1][0]
+
+        for obstacle in obstacles:
+            self.map.AddObstacle(obstacle)
+
+    def CalcPath(self):
+        self.shortestPath = self.map.DrawLine(self.roboCoord_One, self.roboCoord_Two)
+
+    def RunLayer(self, medLayer):
+        self.mediativeLayer = medLayer
+        while not self.mediativeLayer.isDone():
+            time.sleep(0.1)
+            self.GetCoords()
+            self.CalcPath()
+
+            oris = self.shortestPath.CalcOri()
+            self.mediativeLayer.SetRoboOut(oris)
