@@ -29,7 +29,7 @@ class DeliberativeLayer:
         Output - DefinitiveLayer object
         Description: Creates an object connected to the two Robobo robots, and create the map and shortest path calculations
         '''
-        self.map = Map.ToMap(mapFile)
+        self.map = Map.Map(mapFile)
         coords = self.map.GetStarts()
         self.roboCoord_One = coords[0]
         self.roboCoord_Two = coords[1]
@@ -88,8 +88,8 @@ class DeliberativeLayer:
 
     def RunLayer(self, medLayer):
         self.mediativeLayer = medLayer
-        while not self.mediativeLayer.isDone():
-            time.sleep(0.1)
+        while not self.mediativeLayer.IsDone():
+            time.sleep(5)
             self.GetCoords()
             self.CalcPath()
 

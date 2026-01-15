@@ -1,4 +1,4 @@
-from robobo.py import Robobo
+from robobopy.Robobo import Robobo
 
 import time
 
@@ -58,8 +58,10 @@ class MediativeLayer:
         SetRoboIn function
         Description: Returns roboOneIn and roboTwoIn, called by RunLayer method
         '''
-        self.roboOneIn = int(self.roboOne.HowFar())
-        self.roboTwoIn = int(self.roboTwo.HowFar())
+        self.roboOneIn = self.roboOne.HowFar()
+        self.roboOneIn[0] = int(self.roboOneIn[0])
+        self.roboTwoIn = self.roboTwo.HowFar()
+        self.roboTwoIn[0] = int(self.roboTwoIn[0])
 
     def GetObstaclesIn(self):
         '''
@@ -76,9 +78,11 @@ class MediativeLayer:
         SetObstaclesIn function
         Description: Defines obstaclesIn, called by RunLayer method
         '''
-        distObst = (self.roboOne.check_and_report_obstacle(), self.roboTwo.check_and_report_obstacle())
-        for obst in distObst:
+        distOne = self.roboOne.check_and_report_obstacle()
+        distTwo = self.roboTwo.check_and_report_obstacle()
+        for obst in distOne:
             if obst != 0:
+                self.obstaclesIn.append[obst]
                 #TODO: Calc distance in cm and append to obstaclesIn
         
 
@@ -100,7 +104,7 @@ class MediativeLayer:
         self.roboOne = robot1
         self.roboTwo = robot2
         while not self.IsDone():
-            time.sleep(0.2)
+            time.sleep(5)
             
             self.SetRoboIn()
             self.SetObstaclesIn()

@@ -15,14 +15,14 @@ class ReactiveLayer:
         self.robot.resetWheelEncoders()
         self.distanceLastTraveled = 0
         self.robotIsDone = False
-        time.sleep(1)
+        time.sleep(10)
 
         self.robot.setActiveBlobs(True, True, True, True)
 
         self.robot.sayText("Hello")
         self.robot.movePanTo(0,5)
         self.robot.moveTiltTo(90, 5)
-        time.sleep(1)
+        time.sleep(10)
 
         self.base_speed = 8
         self.turn_speed = 15
@@ -136,7 +136,7 @@ class ReactiveLayer:
     def escape_wall(self):
         
         self.robot.moveWheels(-25, -25)
-        time.sleep(1.5)
+        time.sleep(5)
         self.stop_robot()
 
     def set_goal_orientation(self, orientation):
@@ -160,7 +160,7 @@ class ReactiveLayer:
                 self.HowFar()
 
                 self.move_forward()
-                time.sleep(0.5)
+                time.sleep(5)
 
             obstacle_dist = self.check_and_report_obstacle()
             if obstacle_dist > 320000:
@@ -168,7 +168,7 @@ class ReactiveLayer:
                 self.stop_robot()
                 
                 self.robot.moveWheels(-30, -30)
-                time.sleep(1.0)
+                time.sleep(1000)
                 self.stop_robot()
 
                 current_val = int(self.current_orientation.value)
@@ -182,7 +182,7 @@ class ReactiveLayer:
             else:
                 self.move_forward()
             
-            time.sleep(0.1)
+            time.sleep(1000)
         
         print(f"Robot {self.ID} finished task")
         self.stop_robot()

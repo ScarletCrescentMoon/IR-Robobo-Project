@@ -21,14 +21,17 @@ class Map:
         GetAdj - Uses orientation and coordinate input to find an adjacent space
         DrawLine - Draws a line from point A to B, and returns a shortest path object
     '''
-    def ToMap(filepath):
+    def __init__(self, filepath):
         '''
         ToMap function
         Input - filepath of the text file (.??? file)
         Output - Map object
         Description: Creates a Map object from the read-in coordinates
         '''
-        # TODO
+        file = open(filepath, "r")
+        self.gridWidth = int(file.readline())
+        self.gridHeight = int(file.readline())
+        self.startPositions = ((int(file.readline()), int(file.readline())), (int(file.readline()), int(file.readline())))
 
     def GetStarts(self):
         '''
