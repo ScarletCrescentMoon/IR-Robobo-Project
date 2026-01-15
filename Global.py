@@ -9,3 +9,4 @@ class Orientation(Enum):
     SW = 5
     W = 6
     NW = 7
+    count = 8

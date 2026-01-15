@@ -21,8 +21,6 @@ class ReactiveLayer:
 
         self.base_speed = 8
         self.turn_speed = 15
-        # TODO: Add current orientation, goal orientation
-        # DONE
         self.current_orientation = Global.Orientation.N
         self.goal_orientation = Global.Orientation.N
 
@@ -127,32 +125,19 @@ class ReactiveLayer:
         time.sleep(1.5)
         self.stop_robot()
 
-    # TODO: 'Set goal orientation' function for mediative layer to give orientation to this robot instance
-    # DONE 
-
     def set_goal_orientation(self, orientation):
         # Sets direction based on MediativeLaayer
         self.goal_orientation = orientation
 
-    
-    # TODO: 'Get current orientation' function for mediative layer to use to mark obstacles with
-    # DONE
-
     def get_current_orientation(self):
         # Returns orientation for maapping
-        return self.current_orientation 
-    
-
-    # TODO: 'Get Robo ID' for mediative layer to know which robot is detecting what
-    # DONE
+        return self.current_orientation
 
     def get_robot_id(self):
         # Returns robot id
         return self.ID
     
     def RunLayer(self):
-        # TODO: Run the functions above within this funtion, since this function will be the thread that runs
-        # DONE
         while not self.detect_target_robot():
             if self.current_orientation != self.goal_orientation:
                 self.rotate_to_direction(self.current_orientation, self.goal_orientation)

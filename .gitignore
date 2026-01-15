@@ -11,3 +11,6 @@ IR - Sandbox.ipynb
 .ipynb_checkpoints/test_reactive-checkpoint.py
 .ipynb_checkpoints/test_Robobo_functions-checkpoint.py
 __pycache__/main.cpython-313.pyc
+.ipynb_checkpoints/DeliberativeLayer-checkpoint.py
+.ipynb_checkpoints/Map-checkpoint.py
+*.pyc

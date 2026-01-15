@@ -1,5 +1,6 @@
 import numpy as np
 import ShortestPath
+import math
 
 class Map:
     '''
@@ -9,12 +10,15 @@ class Map:
 
     Attributes:
         grid - A boolean numpy array of 1 x 1 cm squared spaces with false for empty spaces and true for filled spaces
+        gridWidth - maximum X value
+        gridHeight - maximum Y value
         startPositions - a tuple of a tuple of coordinates for the robot starting points
 
     Functions:
         ToMap - Reads a text file and returns a Map object
         GetStarts - Returns the start positions of the robots
         AddObstacle - Adds an obstacle at a specific coordinate point
+        GetAdj - Uses orientation and coordinate input to find an adjacent space
         DrawLine - Draws a line from point A to B, and returns a shortest path object
     '''
     def ToMap(filepath):
@@ -43,6 +47,30 @@ class Map:
         '''
         self.grid[coords[0], coords[1]] = True
         
+    def GetAdj(self, inCoord, ori):
+        '''
+        GetAdj function
+        Input - inCoord as coordinate inputs, ori as orientation
+        Output - coordinates of the spot
+        Description: Finds the coordinates of the next space in the direction specified
+        '''
+        if ori == Orientation.N:
+            return (inCoord[0], inCoord[1] + 1)
+        else if ori == Orientation.NE:
+            return (inCoord[0] + 1, inCoord[1] + 1)
+        else if ori == Orientation.E:
+            return (inCoord[0] + 1, inCoord[1])
+        else if ori == Orientation.SE:
+            return (inCoord[0] + 1, inCoord[1] - 1)
+        else if ori == Orientation.S:
+            return (inCoord[0], inCoord[1] - 1)
+        else if ori == Orientation.SW:
+            return (inCoord[0] - 1, inCoord[1] - 1)
+        else if ori == Orientation.W:
+            return (inCoord[0] - 1, inCoord[1])
+        else if ori == Orientation.NW:
+            return (inCoord[0] - 1, inCoord[1] + 1)
+    
     def DrawLine(self, roboOne, roboTwo)
         '''
         DrawLine function
@@ -51,4 +79,50 @@ class Map:
         Description: Creates a ShortestPath object between two points, using the map and the obstacles to
             find out where the line will be
         '''
+        frontier = []
+        visited = []
+        cost = 0
+        prev = roboOne
+
+        frontier.append((roboOne, cost))
+
+        # Use cost path heuristics to determine the viable spaces to visit
+        while prev[0] != roboTwo[0] and prev[1] != roboTwo[1]:
+            if cost < frontier[0][1]:
+                cost += 1
+            prev = frontier.pop(0)
+            visited.append(prev)
+            for ori in range(0, Orientation.count):
+                nextCoord = self.GetAdj(prev, ori)
+
+                if nextCoord[0] == roboTwo[0] and nextCoord[1] == roboTwo[1]:
+                    prev = roboTwo
+                    visited.append((nextCoord), cost + 1)
+                    break
+                else if nextCoord[0] < self.gridWidth and nextCoord[1] < self.gridHeight and not self.grid[nextCoord[0]][nextCoord[1]]:
+                    frontier.append(nextCoord, cost + 1)
+                    for coord in frontier:
+                        if coord[0][0] == nextCoord[0] and coord[0][1] == nextCoord[1]:
+                            frontier.pop()
+                            break
+                    for coord in visited:
+                        if coord[0][0] == nextCoord[0] and coord[0][1] == nextCoord[1]:
+                            frontier.pop()
+                            break
+        # Remove all nodes that do not form part of the path
+        out = out.ShortestPath(roboOne, roboTwo)
+        nodeFound = False
+        while cost > 0:
+            for coord in visited:
+                for ori in range(0, Orientation.count):
+                    nextCoord = self.GetAdj(prev, ori)
+                    if coord[1] == cost -1 and coord[0][0] == nextCoord[0] and coord[0][1] == nextCoord[1]:
+                        out.AddCoords(nextCoord)
+                        nodeFoun = True
+                        break
+                if nodeFound:
+                    break
+            cost -= 1
+
+        return out
     
