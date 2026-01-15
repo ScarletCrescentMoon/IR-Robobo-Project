@@ -30,7 +30,7 @@ class Map:
         '''
         # TODO
 
-    def GetStarts(self)
+    def GetStarts(self):
         '''
         GetStarts function
         Output - Tuple of integer tuple
@@ -38,7 +38,7 @@ class Map:
         '''
         return self.startPositions
 
-    def AddObstacle(self, coords)
+    def AddObstacle(self, coords):
         '''
         AddObstacle function
         Input - coordinates of the obstacle
@@ -56,22 +56,22 @@ class Map:
         '''
         if ori == Orientation.N:
             return (inCoord[0], inCoord[1] + 1)
-        else if ori == Orientation.NE:
+        elif ori == Orientation.NE:
             return (inCoord[0] + 1, inCoord[1] + 1)
-        else if ori == Orientation.E:
+        elif ori == Orientation.E:
             return (inCoord[0] + 1, inCoord[1])
-        else if ori == Orientation.SE:
+        elif ori == Orientation.SE:
             return (inCoord[0] + 1, inCoord[1] - 1)
-        else if ori == Orientation.S:
+        elif ori == Orientation.S:
             return (inCoord[0], inCoord[1] - 1)
-        else if ori == Orientation.SW:
+        elif ori == Orientation.SW:
             return (inCoord[0] - 1, inCoord[1] - 1)
-        else if ori == Orientation.W:
+        elif ori == Orientation.W:
             return (inCoord[0] - 1, inCoord[1])
-        else if ori == Orientation.NW:
+        elif ori == Orientation.NW:
             return (inCoord[0] - 1, inCoord[1] + 1)
     
-    def DrawLine(self, roboOne, roboTwo)
+    def DrawLine(self, roboOne, roboTwo):
         '''
         DrawLine function
         Input - coordinates of the two robots
@@ -99,7 +99,7 @@ class Map:
                     prev = roboTwo
                     visited.append((nextCoord), cost + 1)
                     break
-                else if nextCoord[0] < self.gridWidth and nextCoord[1] < self.gridHeight and not self.grid[nextCoord[0]][nextCoord[1]]:
+                elif nextCoord[0] < self.gridWidth and nextCoord[1] < self.gridHeight and not self.grid[nextCoord[0]][nextCoord[1]]:
                     frontier.append(nextCoord, cost + 1)
                     for coord in frontier:
                         if coord[0][0] == nextCoord[0] and coord[0][1] == nextCoord[1]:
@@ -110,7 +110,7 @@ class Map:
                             frontier.pop()
                             break
         # Remove all nodes that do not form part of the path
-        out = out.ShortestPath(roboOne, roboTwo)
+        out = ShortestPath.ShortestPath(roboOne, roboTwo)
         nodeFound = False
         while cost > 0:
             for coord in visited:

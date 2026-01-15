@@ -4,12 +4,21 @@ from robobopy.utils.IR import IR
 import Global
 import time
 
+'''
+# TODO:
+    HowFar(self) - returns the distance traveled in cm and the orientation
+    
+    self.distanceLastTraveled - approximation of how far the robot has traveled since last running HowFar()
+    
+'''
+
 class ReactiveLayer:
     def __init__(self, roboID, ip):
         # Initialization of the robot and speed
         self.ID = roboID
         self.robot = Robobo(ip)
         self.robot.connect()
+        self.robotIsDone = False
         time.sleep(1)
 
         self.robot.setActiveBlobs(True, True, True, True)
@@ -31,6 +40,9 @@ class ReactiveLayer:
     def stop_robot(self):
         # Stops the robot
         self.robot.stopMotors()
+
+    def IsDone(self):
+        return self.robotIsDone
 
     def get_ir_sensor_data(self):
         # Reads the IR sensors for obstacle detection (return a list of values for teh 8 sensors)
@@ -158,6 +170,7 @@ class ReactiveLayer:
         
         print(f"Robot {self.ID} finished task")
         self.stop_robot()
+        self.robotIsDone = True
 
         # while (!self.detect_target_robot):
         #   if (current orientation != goal orientation):

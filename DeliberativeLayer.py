@@ -1,6 +1,8 @@
 from robobopy.Robobo import Robobo
 import Map
 
+import time
+
 class DeliberativeLayer:
     '''
     DeliberativeLayer
@@ -18,7 +20,7 @@ class DeliberativeLayer:
     Functions:
         GetCoords - Get coordinates from the Mediative Layer object
         CalcPath - Caclulates the shortest path between two robots
-        RunLayer - Function that opreates as a thread
+        RunLayer - Function that opreates as a thread, mediative layer input
     '''
     def __init__(self, mapFile):
         '''
